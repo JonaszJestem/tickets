@@ -22,6 +22,7 @@ class App extends Component {
 
     saveSale = function () {
         let currentSale = this.state.currentSale;
+
         this.setState((prevState) => {
             return {sales: [...prevState.sales, currentSale], currentSale: 0}
         });

@@ -11,14 +11,12 @@ class Tickets extends React.Component {
     addTickets = function (name, sum) {
         this.setState({
             [name]: sum
-        }, this.propagateToParent);
-    };
-
-    propagateToParent = function () {
-        let sum = Object.values(this.state).reduce(function (a, b) {
-            return a + b;
-        }, 0);
-        this.props.updateCurrentSale(sum);
+        }, () => {
+            let sum = Object.values(this.state).reduce(function (a, b) {
+                return a + b;
+            }, 0);
+            this.props.updateCurrentSale(sum);
+        });
     };
 
     render() {

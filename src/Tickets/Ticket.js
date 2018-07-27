@@ -11,13 +11,10 @@ class Ticket extends React.Component {
     handleChange = function (e) {
         let value = e.target.value === "+" ? 1 : -1;
 
-        this.setState((prevState) => { return {numberOfTickets: prevState.numberOfTickets + 1}}, this.propagateToParent)
+        this.setState((prevState) => {
+            return {numberOfTickets: prevState.numberOfTickets + value}
+        }, () => this.props.setTicketsSum(this.props.name, this.state.numberOfTickets * this.props.price))
     };
-
-    propagateToParent = function() {
-        this.props.setTicketsSum(this.props.name, this.state.numberOfTickets * this.props.pric
-    };
-
 
     render() {
         return <div>
