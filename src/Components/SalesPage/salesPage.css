@@ -1,0 +1,13 @@
+form {
+    margin: auto;
+}
+
+input {
+    margin: 10px 0;
+}
+
+label, button[type='submit'] {
+    display: block;
+    margin: auto;
+}
+

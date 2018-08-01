@@ -1,54 +1,28 @@
-import React, {Component} from 'react';
-import './App.css';
-import Tickets from "./Tickets/Tickets";
+import {connect} from "react-redux";
+import React, {Component} from "react";
+import SalesPage from "./Components/SalesPage/SalesPage";
+import {createSale} from "./Actions";
+import "./App.css"
+
 
 class App extends Component {
-
-    state = {
-        sales: [],
-        currentSale: 0
-    };
-
-    constructor(props) {
-        super(props);
-
-        this.updateCurrentSale = this.updateCurrentSale.bind(this);
-        this.saveSale = this.saveSale.bind(this);
-    }
-
-    updateCurrentSale = function (price) {
-        this.setState(() => ({currentSale: price}));
-    };
-
-    saveSale = function () {
-        let currentSale = this.state.currentSale;
-
-        this.setState((prevState) => {
-            return {sales: [...prevState.sales, currentSale], currentSale: 0}
-        });
+    onCreateSale = ({normalTickets, discountedTickets}) => {
+        this.props.dispatch(createSale({normalTickets, discountedTickets}));
     };
 
     render() {
         return (
-                <div className="App">
-                    <Tickets updateCurrentSale={this.updateCurrentSale}/>
-                    <Save saveSale={this.saveSale}/>
-                    <Sales list={this.state.sales}/>
-                </div>
+            <div className="main-content">
+                <SalesPage sales={this.props.sales} onCreateSale={this.onCreateSale}/>
+            </div>
         );
     }
 }
 
-class Save extends React.Component {
-    render() {
-        return <button onClick={this.props.saveSale}>Save</button>;
+function mapStateToProps(state) {
+    return {
+        sales: state.sales
     }
 }
 
-class Sales extends React.Component {
-    render() {
-        return <ul>{this.props.list.map((price, index) => <li key={index}>{price}</li>)}</ul>;
-    }
-}
-
-export default App;
+export default connect(mapStateToProps)(App);
